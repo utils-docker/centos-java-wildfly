@@ -29,10 +29,13 @@ RUN yum -y update && yum install -y openssh-server \
   && tar -xzf wildfly.tar.gz && rm wildfly.tar.gz && mv $directory wildfly \
   && echo 'JAVA_OPTS="$JAVA_OPTS -Duser.timezone=America/Sao_Paulo -Duser.country=BR -Duser.language=pt"' >> /opt/wildfly/bin/standalone.conf \
   && chown ${wildfly_username}:${wildfly_username} /opt/wildfly -R \
+  && /opt/wildfly/bin/add-user.sh admin admin --silent=true \
   && yum clean all && rm -rf /tmp/*
 
 COPY configurations/supervisor.d/* /etc/supervisor.d/
 
 WORKDIR ${install_dir}/wildfly
 
-EXPOSE 8080/tcp 8443/tcp 9990/tcp
+VOLUME ["/opt/wildfly/standalone/deployments/", "/opt/wildfly/standalone/tmp/", "/opt/wildfly/standalone/data/", "/opt/wildfly/standalone/logs/"]
+
+EXPOSE 22/tcp 8080/tcp 8443/tcp 9990/tcp
