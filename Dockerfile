@@ -3,7 +3,7 @@ MAINTAINER Fábio Luciano <fabio@naoimporta.com>
 LABEL Description="CentOS Java Wildfly"
 
 ARG wildfly_version
-ENV wildfly_version ${wildfly_version:-"8.2.1.Final"}
+ENV wildfly_version ${wildfly_version:-"10.1.0.Final"}
 
 ARG wildfly_username
 ENV wildfly_username ${wildfly_username:-"wildfly"}
