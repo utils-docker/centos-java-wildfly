@@ -20,6 +20,7 @@ WORKDIR ${install_dir}
 
 RUN yum -y update && yum install -y openssh-server \
   && printf "${wildfly_password}\n${wildfly_password}" | adduser ${wildfly_username} \
+  && echo '${wildfly_username}:${wildfly_password}' | chpasswd \
   && ssh-keygen -q -t rsa -f /etc/ssh/ssh_host_rsa_key -P "" \
   && ssh-keygen -q -t dsa -f /etc/ssh/ssh_host_dsa_key -P "" \
   && ssh-keygen -q -t ecdsa -f /etc/ssh/ssh_host_ecdsa_key -P ""\
