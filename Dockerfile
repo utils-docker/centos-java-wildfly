@@ -37,6 +37,6 @@ COPY configurations/supervisor.d/* /etc/supervisor.d/
 
 WORKDIR ${install_dir}/wildfly
 
-VOLUME ["/opt/wildfly/standalone/deployments/", "/opt/wildfly/standalone/tmp/", "/opt/wildfly/standalone/data/", "/opt/wildfly/standalone/logs/"]
+VOLUME ["/opt/wildfly/standalone/deployments/", "/opt/wildfly/standalone/tmp/", "/opt/wildfly/standalone/data/", "/opt/wildfly/standalone/log/"]
 
 EXPOSE 22/tcp 8080/tcp 8443/tcp 9990/tcp
