@@ -18,6 +18,9 @@ ENV wildfly_url "http://download.jboss.org/wildfly/${wildfly_version}/wildfly-${
 
 WORKDIR ${install_dir}
 
+COPY configurations/supervisor.d/* /etc/supervisor.d/
+COPY configurations/scripts/entrypoint.sh /usr/local/bin
+
 RUN yum -y update && yum install -y openssh-server \
   && printf "${wildfly_password}\n${wildfly_password}" | adduser ${wildfly_username} \
   && echo "${wildfly_username}:${wildfly_password}" | chpasswd \
@@ -31,12 +34,8 @@ RUN yum -y update && yum install -y openssh-server \
   && echo 'JAVA_OPTS="$JAVA_OPTS -Duser.timezone=America/Sao_Paulo -Duser.country=BR -Duser.language=pt"' >> /opt/wildfly/bin/standalone.conf \
   && chown ${wildfly_username}:${wildfly_username} /opt/wildfly -R \
   && /opt/wildfly/bin/add-user.sh admin admin --silent=true \
+  && chmod a+x /usr/local/bin/ -R \
   && yum clean all && rm -rf /tmp/*
-
-COPY configurations/supervisor.d/* /etc/supervisor.d/
-COPY configurations/scripts/entrypoint.sh /usr/local/bin
-
-RUN chmod a+x /usr/local/bin/ -R
 
 WORKDIR ${install_dir}/wildfly
 
