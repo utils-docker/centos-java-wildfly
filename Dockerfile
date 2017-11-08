@@ -34,6 +34,9 @@ RUN yum -y update && yum install -y openssh-server \
   && yum clean all && rm -rf /tmp/*
 
 COPY configurations/supervisor.d/* /etc/supervisor.d/
+COPY configurations/scripts/entrypoint.sh /usr/local/bin
+
+RUN chmod a+x /usr/local/bin/ -R
 
 WORKDIR ${install_dir}/wildfly
 
